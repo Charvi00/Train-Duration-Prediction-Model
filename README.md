@@ -15,7 +15,7 @@ A Machine Learning based web application to predict train travel time using dist
 - HTML/CSS
 
 ## Live Demo
-https://train-duration-predictor.onrender.com
+https://train-duration-prediction-model.onrender.com
 
 ## Author
 Charvi Aggarwal (BTech CSE AIML)
