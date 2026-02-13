@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Train Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<body>
+
+<div class="box">
+
+    <h1>🚆 Train Duration Predictor</h1>
+    <p>Predict your journey time instantly</p>
+
+    <form method="POST">
+
+        <label>Distance (km)</label>
+        <input name="distance" type="number" step="0.1" required>
+
+        <label>Number of Stops</label>
+        <input name="stops" type="number" required>
+
+        <button type="submit">Predict Duration</button>
+
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            ⏱ Predicted Time: {{ prediction }} hours
+        </div>
+    {% endif %}
+
+    <div class="footer">
+        Powered by Machine Learning
+    </div>
+
+</div>
+
+</body>
+
+
+</body>
+</html>
