@@ -1,46 +1,185 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Train Predictor</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="AI-powered train duration prediction tool - Get accurate journey time estimates instantly">
+    <title>Train Duration Predictor | AI-Powered Journey Planner</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-
-<body>
-
-<div class="box">
-
-    <h1>🚆 Train Duration Predictor</h1>
-    <p>Predict your journey time instantly</p>
-
-    <form method="POST">
-
-        <label>Distance (km)</label>
-        <input name="distance" type="number" step="0.1" required>
-
-        <label>Number of Stops</label>
-        <input name="stops" type="number" required>
-
-        <button type="submit">Predict Duration</button>
-
-    </form>
-
-    {% if prediction %}
-        <div class="result">
-            ⏱ Predicted Time: {{ prediction }} hours
-        </div>
-    {% endif %}
-
-    <div class="footer">
-        Powered by Machine Learning
+    <!-- Animated Background Elements -->
+    <div class="bg-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
     </div>
 
-</div>
+    <!-- Background Image -->
+    <div class="bg-image"></div>
 
+    <div class="container">
+        <!-- Main Card -->
+        <div class="card">
+            <!-- Header Section -->
+            <div class="header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-train"></i>
+                </div>
+                <h1>Train Duration Predictor</h1>
+                <p class="subtitle">Get accurate journey time predictions powered by advanced machine learning</p>
+            </div>
+
+            <!-- Form Section -->
+            <form method="POST" class="prediction-form" id="predictionForm">
+                <div class="input-group">
+                    <label for="distance">
+                        <i class="fas fa-route"></i>
+                        Distance
+                    </label>
+                    <div class="input-wrapper">
+                        <input id="distance" name="distance" type="number" step="0.1"
+                            placeholder="Enter distance in kilometers" required>
+                        <span class="input-unit">km</span>
+                    </div>
+                    <span class="error-message" id="distanceError"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="stops">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Number of Stops
+                    </label>
+                    <div class="input-wrapper">
+                        <input id="stops" name="stops" type="number" placeholder="Enter total number of stops" required>
+                        <span class="input-unit">stops</span>
+                    </div>
+                    <span class="error-message" id="stopsError"></span>
+                </div>
+
+                <button type="submit" class="predict-btn">
+                    <span class="btn-text">Predict Duration</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Result Section -->
+            {% if prediction %}
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="result-content">
+                    <p class="result-label">Estimated Journey Time</p>
+                    <h2 class="result-value">{{ prediction }} <span>hours</span></h2>
+                </div>
+                <div class="result-decoration"></div>
+            </div>
+            {% endif %}
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-content">
+                    <div class="footer-badge">
+                        <i class="fas fa-brain"></i>
+                        <span>Powered by Machine Learning</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-info-circle"></i> About
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-code"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-credit">
+                    <p>© 2026 Train Duration Predictor | Built with Python & Flask</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Instant Results</h3>
+                <p>Get predictions in milliseconds</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>High Accuracy</h3>
+                <p>ML-trained on real data</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Reliable</h3>
+                <p>Consistent performance</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        const form = document.getElementById('predictionForm');
+        const distanceInput = document.getElementById('distance');
+        const stopsInput = document.getElementById('stops');
+        const distanceError = document.getElementById('distanceError');
+        const stopsError = document.getElementById('stopsError');
+
+        form.addEventListener('submit', function (e) {
+            let isValid = true;
+
+            // Clear previous errors
+            distanceError.textContent = '';
+            stopsError.textContent = '';
+            distanceInput.classList.remove('input-error');
+            stopsInput.classList.remove('input-error');
+
+            // Validate distance
+            if (!distanceInput.value || distanceInput.value <= 0) {
+                distanceError.textContent = 'Please enter a valid distance';
+                distanceInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            // Validate stops
+            if (!stopsInput.value || stopsInput.value < 0) {
+                stopsError.textContent = 'Please enter a valid number of stops';
+                stopsInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        // Clear error on input
+        distanceInput.addEventListener('input', function () {
+            distanceError.textContent = '';
+            distanceInput.classList.remove('input-error');
+        });
+
+        stopsInput.addEventListener('input', function () {
+            stopsError.textContent = '';
+            stopsInput.classList.remove('input-error');
+        });
+    </script>
 </body>
 
-
-</body>
 </html>
